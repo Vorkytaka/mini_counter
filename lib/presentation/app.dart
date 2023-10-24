@@ -21,7 +21,7 @@ class App extends StatelessWidget {
       value: dependencies,
       updateShouldNotify: (prev, curr) => false,
       child: CupertinoApp(
-        theme: CupertinoThemeData(
+        theme: const CupertinoThemeData(
           brightness: Brightness.dark,
           scaffoldBackgroundColor: Color(0xFF171717),
           primaryColor: Color.fromARGB(255, 10, 132, 255),

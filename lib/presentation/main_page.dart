@@ -33,7 +33,7 @@ class MainPage extends StatelessWidget {
         middle: Text(s.main_page__title),
       ),
       backgroundColor: theme.scaffoldBackgroundColor,
-      child: CounterList(),
+      child: const CounterList(),
     );
   }
 }
@@ -121,7 +121,7 @@ class CounterWidget extends StatelessWidget {
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
-            child: Icon(
+            child: const Icon(
               Icons.remove,
               size: 36,
             ),
@@ -137,7 +137,7 @@ class CounterWidget extends StatelessWidget {
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
-            child: Icon(
+            child: const Icon(
               Icons.add,
               size: 36,
             ),
@@ -183,7 +183,7 @@ class CounterCenterWidget extends StatelessWidget {
             children: [
               FittedBox(
                 child: DefaultTextStyle.merge(
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 72,
                     fontWeight: FontWeight.w200,
                   ),
@@ -192,7 +192,7 @@ class CounterCenterWidget extends StatelessWidget {
               ),
               if (title != null)
                 DefaultTextStyle.merge(
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
                     color: Colors.white54,

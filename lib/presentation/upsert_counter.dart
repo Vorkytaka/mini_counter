@@ -66,7 +66,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: () => Navigator.of(context).maybePop(),
-            child: Icon(Icons.close),
+            child: const Icon(Icons.close),
           ),
           middle: widget.counter != null
               ? Text(s.upsert_page__title__change)
@@ -74,7 +74,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
           trailing: CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: _upsert,
-            child: Icon(Icons.done),
+            child: const Icon(Icons.done),
           ),
         ),
         const SizedBox(height: 16),
@@ -87,7 +87,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                 maxLines: 1,
                 controller: _controller,
                 textAlign: TextAlign.end,
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 autofocus: true,
                 prefix: Padding(
                   padding: const EdgeInsets.only(left: 20),
@@ -107,7 +107,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                   Container(
                     decoration: BoxDecoration(
                       color: CupertinoColors.secondarySystemFill.darkColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -180,7 +180,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                 },
                 title: Text(
                   s.upsert_page__hint_delete,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: CupertinoColors.destructiveRed,
                   ),
                 ),
@@ -218,24 +218,24 @@ Future<bool> _confirmDeleteDialog({
       context: context,
       barrierDismissible: true,
       builder: (context) {
-        final s= S.of(context);
+        final s = S.of(context);
 
         return CupertinoAlertDialog(
-        title: Text(s.delete_confirm__title),
-        actions: [
-          CupertinoDialogAction(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(s.delete_confirm__cancel),
-          ),
-          CupertinoDialogAction(
-            onPressed: () => Navigator.of(context).pop(true),
-            isDefaultAction: true,
-            textStyle: TextStyle(
-              color: CupertinoColors.destructiveRed,
+          title: Text(s.delete_confirm__title),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(s.delete_confirm__cancel),
             ),
-            child: Text(s.delete_confirm__delete),
-          ),
-        ],
-      );
+            CupertinoDialogAction(
+              onPressed: () => Navigator.of(context).pop(true),
+              isDefaultAction: true,
+              textStyle: const TextStyle(
+                color: CupertinoColors.destructiveRed,
+              ),
+              child: Text(s.delete_confirm__delete),
+            ),
+          ],
+        );
       },
     ).then((value) => value ?? false);

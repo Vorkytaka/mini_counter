@@ -49,7 +49,8 @@ class Database extends _$Database {
     await query.go();
   }
 
-  Future<void> updateCounter(String id, {
+  Future<void> updateCounter(
+    String id, {
     String? title,
     bool? negative,
     int? step,
