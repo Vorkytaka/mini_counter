@@ -1,0 +1,27 @@
+import 'converter.dart';
+
+CREATE TABLE counters (
+  "id" BLOB NOT NULL PRIMARY KEY DEFAULT (randomblob(16)) MAPPED BY `const UUIDConverter()`,
+  "title" TEXT,
+  "value" INT NOT NULL DEFAULT 0,
+  "table_order" INT NOT NULL,
+  "negative" BOOL NOT NULL DEFAULT true,
+  "step" INT NOT NULL DEFAULT 1,
+  "updated_date" INTEGER NOT NULL DEFAULT (strftime('%s', CURRENT_TIMESTAMP)) MAPPED BY `const UTCDateTimeConverter()`,
+  "created_date" INTEGER NOT NULL DEFAULT (strftime('%s', CURRENT_TIMESTAMP)) MAPPED BY `const UTCDateTimeConverter()`
+);
+
+createCounter: INSERT INTO counters
+    (title, "table_order", negative, step)
+    VALUES
+    (:title, IFNULL((SELECT MAX("table_order") FROM counters), 0) + 100, :negative, :step);
+
+CREATE TRIGGER IF NOT EXISTS counter_update_timestamp
+    AFTER UPDATE
+    ON counters
+    FOR EACH ROW
+    BEGIN
+        UPDATE counters
+        SET updated_date = strftime('%s', CURRENT_TIMESTAMP)
+        WHERE id = old.id;
+    END;
