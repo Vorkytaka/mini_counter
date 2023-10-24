@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../data/database/database.dart';
 import '../dependency.dart';
+import 'intl/generated/l10n.dart';
 import 'upsert_counter.dart';
 
 class MainPage extends StatelessWidget {
@@ -17,6 +18,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = CupertinoTheme.of(context);
+    final s = S.of(context);
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -28,7 +30,7 @@ class MainPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: const Icon(Icons.add),
         ),
-        middle: Text('Счётчики'),
+        middle: Text(s.main_page__title),
       ),
       backgroundColor: theme.scaffoldBackgroundColor,
       child: CounterList(),

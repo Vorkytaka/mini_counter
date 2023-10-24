@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../data/database/database.dart';
 import '../dependency.dart';
+import 'intl/generated/l10n.dart';
 
 Future<void> showUpsertCounterSheet({
   required BuildContext context,
@@ -55,6 +56,8 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+
     return ListView(
       physics: const ScrollPhysics(),
       children: [
@@ -66,8 +69,8 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
             child: Icon(Icons.close),
           ),
           middle: widget.counter != null
-              ? Text('Изменить счётчик')
-              : Text('Добавить счётчик'),
+              ? Text(s.upsert_page__title__change)
+              : Text(s.upsert_page__title__add),
           trailing: CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: _upsert,
@@ -88,14 +91,14 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                 autofocus: true,
                 prefix: Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Text('Название'),
+                  child: Text(s.upsert_page__hint_title),
                 ),
                 clearButtonMode: OverlayVisibilityMode.editing,
                 textCapitalization: TextCapitalization.sentences,
               ),
             ),
             CupertinoListTile(
-              title: Text('Шаг счётчика'),
+              title: Text(s.upsert_page__hint_step),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -148,7 +151,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
               onTap: () => setState(() {
                 _negativeEnabled = !_negativeEnabled;
               }),
-              title: Text('Отрицательные числа'),
+              title: Text(s.upsert_page__hint_negative),
               trailing: Switch.adaptive(
                 value: _negativeEnabled,
                 onChanged: (enable) => setState(() {
@@ -176,7 +179,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                   });
                 },
                 title: Text(
-                  'Удалить счётчик',
+                  s.upsert_page__hint_delete,
                   style: TextStyle(
                     color: CupertinoColors.destructiveRed,
                   ),
@@ -214,12 +217,15 @@ Future<bool> _confirmDeleteDialog({
     showCupertinoDialog<bool>(
       context: context,
       barrierDismissible: true,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text('Удалить счётчик?'),
+      builder: (context) {
+        final s= S.of(context);
+
+        return CupertinoAlertDialog(
+        title: Text(s.delete_confirm__title),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Отменить'),
+            child: Text(s.delete_confirm__cancel),
           ),
           CupertinoDialogAction(
             onPressed: () => Navigator.of(context).pop(true),
@@ -227,8 +233,9 @@ Future<bool> _confirmDeleteDialog({
             textStyle: TextStyle(
               color: CupertinoColors.destructiveRed,
             ),
-            child: Text('Удалить'),
+            child: Text(s.delete_confirm__delete),
           ),
         ],
-      ),
+      );
+      },
     ).then((value) => value ?? false);

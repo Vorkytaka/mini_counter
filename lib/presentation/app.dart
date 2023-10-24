@@ -4,6 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../dependency.dart';
+import 'intl/generated/l10n.dart';
 import 'main_page.dart';
 
 class App extends StatelessWidget {
@@ -31,7 +32,9 @@ class App extends StatelessWidget {
           DefaultMaterialLocalizations.delegate,
           DefaultCupertinoLocalizations.delegate,
           DefaultWidgetsLocalizations.delegate,
+          S.delegate,
         ],
+        supportedLocales: S.delegate.supportedLocales,
         initialRoute: '/',
         onGenerateRoute: (settings) {
           final Widget? page;
