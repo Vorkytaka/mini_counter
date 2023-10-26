@@ -2,7 +2,6 @@ import 'dart:async';
 
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../data/database/database.dart';
 import '../dependency.dart';
 import 'intl/generated/l10n.dart';
+import 'platform/platform_ui.dart';
 import 'upsert_counter.dart';
 
 class MainPage extends StatelessWidget {
@@ -17,23 +17,90 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CupertinoTheme.of(context);
     final s = S.of(context);
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        transitionBetweenRoutes: false,
-        trailing: CupertinoButton(
-          onPressed: () {
-            showUpsertCounterSheet(context: context);
-          },
-          padding: EdgeInsets.zero,
-          child: const Icon(Icons.add),
-        ),
-        middle: Text(s.main_page__title),
+    final platform = PlatformProvider.of(context);
+
+    final Widget? iosAction;
+    final Widget? androidAction;
+    if (platform.isCupertino) {
+      iosAction = PlatformIconButton(
+        onPressed: () => showUpsertCounterSheet(context: context),
+        padding: EdgeInsets.zero,
+        icon: const Icon(Icons.add),
+      );
+      androidAction = null;
+    } else {
+      iosAction = null;
+      androidAction = FloatingActionButton(
+        onPressed: () => showUpsertCounterSheet(context: context),
+        child: const Icon(Icons.add),
+      );
+    }
+
+    return PlatformScaffold(
+      floatingActionButton: androidAction,
+      body: CustomScrollView(
+        slivers: [
+          PlatformSliverAppBar(
+            trailing: iosAction,
+            title: SelectPlatformWidget(
+              child: Text(s.main_page__title),
+            ),
+          ),
+          const CounterList(),
+        ],
       ),
-      backgroundColor: theme.scaffoldBackgroundColor,
-      child: const CounterList(),
+    );
+  }
+}
+
+class SelectPlatformWidget extends StatefulWidget {
+  final Widget child;
+
+  const SelectPlatformWidget({
+    required this.child,
+    super.key,
+  });
+
+  @override
+  State<SelectPlatformWidget> createState() => _SelectPlatformWidgetState();
+}
+
+class _SelectPlatformWidgetState extends State<SelectPlatformWidget> {
+  int _taps = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        _taps += 1;
+        if (_taps >= 3) {
+          showPlatformDialog<TargetPlatform>(
+            context: context,
+            builder: (context) => PlatformAlertDialog(
+              title: Text("Select the platform"),
+              actions: [
+                PlatformDialogAction(
+                  onPressed: () =>
+                      Navigator.of(context).pop(TargetPlatform.iOS),
+                  child: Text('iOS'),
+                ),
+                PlatformDialogAction(
+                  onPressed: () =>
+                      Navigator.of(context).pop(TargetPlatform.android),
+                  child: Text('Android'),
+                ),
+              ],
+            ),
+          ).then((platform) {
+            if (platform != null) {
+              PlatformProviderHolder.setTargetPlatform(context, platform);
+            }
+          });
+        }
+      },
+      child: widget.child,
     );
   }
 }
@@ -77,17 +144,18 @@ class _CounterListState extends State<CounterList> {
   Widget build(BuildContext context) {
     final ids = _ids;
     if (ids == null) {
-      return const SizedBox.shrink();
+      return const SliverToBoxAdapter();
     }
 
-    return ListView.separated(
-      itemCount: ids.length,
-      separatorBuilder: (context, i) =>
-          Divider(color: CupertinoColors.separator.darkColor),
-      itemBuilder: (context, i) => CounterWidget(
-        id: ids[i],
-        key: ValueKey(ids[i]),
-      ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+          (context, i) => CounterWidget(
+                id: ids[i],
+                key: ValueKey(ids[i]),
+              ),
+          childCount: ids.length),
+      // separatorBuilder: (context, i) =>
+      //     Divider(color: CupertinoColors.separator.darkColor),
     );
   }
 }
@@ -115,13 +183,13 @@ class CounterWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CupertinoButton(
+          PlatformIconButton(
             onPressed: () {
               database.decrement(id);
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
-            child: const Icon(
+            icon: const Icon(
               Icons.remove,
               size: 36,
             ),
@@ -131,13 +199,13 @@ class CounterWidget extends StatelessWidget {
               id: id,
             ),
           ),
-          CupertinoButton(
+          PlatformIconButton(
             onPressed: () {
               database.increment(id);
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
-            child: const Icon(
+            icon: const Icon(
               Icons.add,
               size: 36,
             ),
