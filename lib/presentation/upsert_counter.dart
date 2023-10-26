@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../data/database/database.dart';
 import '../dependency.dart';
 import 'intl/generated/l10n.dart';
+import 'platform/platform_ui.dart';
 
 Future<void> showUpsertCounterSheet({
   required BuildContext context,
   Counter? counter,
 }) =>
-    CupertinoScaffold.showCupertinoModalBottomSheet(
+    showPlatformBottomSheet(
       context: context,
-      expand: true,
       builder: (context) => UpsertCounterPage(
         counter: counter,
       ),
@@ -61,48 +60,37 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
     return ListView(
       physics: const ScrollPhysics(),
       children: [
-        CupertinoNavigationBar(
-          transitionBetweenRoutes: false,
-          leading: CupertinoButton(
+        PlatformAppBar(
+          leading: PlatformIconButton(
             padding: EdgeInsets.zero,
             onPressed: () => Navigator.of(context).maybePop(),
-            child: const Icon(Icons.close),
+            icon: const Icon(Icons.close),
           ),
-          middle: widget.counter != null
+          title: widget.counter != null
               ? Text(s.upsert_page__title__change)
               : Text(s.upsert_page__title__add),
-          trailing: CupertinoButton(
+          trailing: PlatformIconButton(
             padding: EdgeInsets.zero,
             onPressed: _upsert,
-            child: const Icon(Icons.done),
+            icon: const Icon(Icons.done),
           ),
         ),
         const SizedBox(height: 16),
-        CupertinoListSection.insetGrouped(
-          backgroundColor: Colors.transparent,
+        PlatformListTileGroup(
           children: [
-            SizedBox(
-              height: 44,
-              child: CupertinoTextField(
-                maxLines: 1,
-                controller: _controller,
-                textAlign: TextAlign.end,
-                decoration: const BoxDecoration(),
-                autofocus: true,
-                prefix: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(s.upsert_page__hint_title),
-                ),
-                clearButtonMode: OverlayVisibilityMode.editing,
-                textCapitalization: TextCapitalization.sentences,
-              ),
-            ),
-            CupertinoListTile(
+            _titleTextField(context),
+            PlatformListTile(
               title: Text(s.upsert_page__hint_step),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('$_step'),
+                  DefaultTextStyle.merge(
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    child: Text('$_step'),
+                  ),
                   const SizedBox(width: 16),
                   Container(
                     decoration: BoxDecoration(
@@ -147,12 +135,12 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                 ],
               ),
             ),
-            CupertinoListTile(
+            PlatformListTile(
               onTap: () => setState(() {
                 _negativeEnabled = !_negativeEnabled;
               }),
               title: Text(s.upsert_page__hint_negative),
-              trailing: Switch.adaptive(
+              trailing: PlatformSwitch(
                 value: _negativeEnabled,
                 onChanged: (enable) => setState(() {
                   _negativeEnabled = enable;
@@ -162,10 +150,9 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
           ],
         ),
         if (widget.counter != null)
-          CupertinoListSection.insetGrouped(
-            backgroundColor: Colors.transparent,
+          PlatformListTileGroup(
             children: [
-              CupertinoListTile(
+              PlatformListTile(
                 onTap: () {
                   _confirmDeleteDialog(context: context).then((value) async {
                     if (value) {
@@ -191,6 +178,43 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
     );
   }
 
+  Widget _titleTextField(BuildContext context) {
+    final s = S.of(context);
+    final platform = PlatformProvider.of(context);
+
+    if (platform.isCupertino) {
+      return SizedBox(
+        height: 44,
+        child: CupertinoTextField(
+          maxLines: 1,
+          controller: _controller,
+          textAlign: TextAlign.end,
+          decoration: const BoxDecoration(),
+          autofocus: true,
+          prefix: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(s.upsert_page__hint_title),
+          ),
+          clearButtonMode: OverlayVisibilityMode.editing,
+          textCapitalization: TextCapitalization.sentences,
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: TextField(
+          maxLines: 1,
+          autofocus: true,
+          controller: _controller,
+          decoration: InputDecoration(
+            label: Text(s.upsert_page__hint_title),
+            // border: InputBorder.none,
+          ),
+        ),
+      );
+    }
+  }
+
   void _upsert() {
     final dependencies = context.read<Dependencies>();
     final database = dependencies.database;
@@ -214,20 +238,20 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
 Future<bool> _confirmDeleteDialog({
   required BuildContext context,
 }) =>
-    showCupertinoDialog<bool>(
+    showPlatformDialog<bool>(
       context: context,
       barrierDismissible: true,
       builder: (context) {
         final s = S.of(context);
 
-        return CupertinoAlertDialog(
+        return PlatformAlertDialog(
           title: Text(s.delete_confirm__title),
           actions: [
-            CupertinoDialogAction(
+            PlatformDialogAction(
               onPressed: () => Navigator.of(context).pop(false),
               child: Text(s.delete_confirm__cancel),
             ),
-            CupertinoDialogAction(
+            PlatformDialogAction(
               onPressed: () => Navigator.of(context).pop(true),
               isDefaultAction: true,
               textStyle: const TextStyle(
