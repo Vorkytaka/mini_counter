@@ -22,18 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "app_name": MessageLookupByLibrary.simpleMessage("miniCounter"),
-        "delete_confirm__cancel":
-            MessageLookupByLibrary.simpleMessage("Abbrechen"),
-        "delete_confirm__delete":
+        "common__cancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
+        "delete_confirm__confirm":
             MessageLookupByLibrary.simpleMessage("Löschen"),
         "delete_confirm__title":
             MessageLookupByLibrary.simpleMessage("Zähler löschen?"),
         "main_page__title": MessageLookupByLibrary.simpleMessage("Zähler"),
+        "reset_confirm__confirm":
+            MessageLookupByLibrary.simpleMessage("Zurücksetzen"),
+        "reset_confirm__title":
+            MessageLookupByLibrary.simpleMessage("Zähler zurücksetzen?"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Zähler löschen"),
         "upsert_page__hint_negative":
             MessageLookupByLibrary.simpleMessage("Negative Zahlen"),
+        "upsert_page__hint_reset":
+            MessageLookupByLibrary.simpleMessage("Zähler zurücksetzen"),
         "upsert_page__hint_step":
             MessageLookupByLibrary.simpleMessage("Zählerschritt"),
         "upsert_page__hint_title":

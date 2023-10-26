@@ -22,18 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "app_name": MessageLookupByLibrary.simpleMessage("miniCounter"),
-        "delete_confirm__cancel":
-            MessageLookupByLibrary.simpleMessage("Скасувати"),
-        "delete_confirm__delete":
+        "common__cancel": MessageLookupByLibrary.simpleMessage("Скасувати"),
+        "delete_confirm__confirm":
             MessageLookupByLibrary.simpleMessage("Видалити"),
         "delete_confirm__title":
             MessageLookupByLibrary.simpleMessage("Видалити лічильник?"),
         "main_page__title": MessageLookupByLibrary.simpleMessage("Лічильники"),
+        "reset_confirm__confirm":
+            MessageLookupByLibrary.simpleMessage("Скинути"),
+        "reset_confirm__title":
+            MessageLookupByLibrary.simpleMessage("Скинути лічильник?"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Видалити лічильник"),
         "upsert_page__hint_negative":
             MessageLookupByLibrary.simpleMessage("Негативні числа"),
+        "upsert_page__hint_reset":
+            MessageLookupByLibrary.simpleMessage("Скидання лічильника"),
         "upsert_page__hint_step":
             MessageLookupByLibrary.simpleMessage("Крок лічильника"),
         "upsert_page__hint_title":

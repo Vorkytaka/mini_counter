@@ -1,5 +1,6 @@
 {
-  "app_name": "miniCounter",
+  "@___COMMON": "",
+  "common__cancel": "Скасувати",
   "@___MAIN_PAGE": "",
   "main_page__title": "Лічильники",
   "@___UPSERT_PAGE": "",
@@ -8,9 +9,12 @@
   "upsert_page__hint_title": "Назва",
   "upsert_page__hint_step": "Крок лічильника",
   "upsert_page__hint_negative": "Негативні числа",
+  "upsert_page__hint_reset": "Скидання лічильника",
   "upsert_page__hint_delete": "Видалити лічильник",
   "@___DELETE_CONFIRM": "",
   "delete_confirm__title": "Видалити лічильник?",
-  "delete_confirm__delete": "Видалити",
-  "delete_confirm__cancel": "Скасувати"
+  "delete_confirm__confirm": "Видалити",
+  "@___RESET_CONFIRM": "",
+  "reset_confirm__title": "Скинути лічильник?",
+  "reset_confirm__confirm": "Скинути"
 }

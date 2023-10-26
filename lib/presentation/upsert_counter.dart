@@ -154,12 +154,37 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
             children: [
               PlatformListTile(
                 onTap: () {
-                  _confirmDeleteDialog(context: context).then((value) async {
+                  _confirmDialog(
+                    context: context,
+                    title: s.reset_confirm__title,
+                    cancel: s.common__cancel,
+                    confirm: s.reset_confirm__confirm,
+                  ).then((value) {
                     if (value) {
                       final dependencies = context.read<Dependencies>();
                       final database = dependencies.database;
 
-                      await database
+                      database
+                          .resetCounter(widget.counter!.id)
+                          .then((_) => Navigator.of(context).pop());
+                    }
+                  });
+                },
+                title: Text(s.upsert_page__hint_reset),
+              ),
+              PlatformListTile(
+                onTap: () {
+                  _confirmDialog(
+                    context: context,
+                    title: s.delete_confirm__title,
+                    cancel: s.common__cancel,
+                    confirm: s.delete_confirm__confirm,
+                  ).then((value) async {
+                    if (value) {
+                      final dependencies = context.read<Dependencies>();
+                      final database = dependencies.database;
+
+                      database
                           .deleteCounter(widget.counter!.id)
                           .then((_) => Navigator.of(context).pop());
                     }
@@ -235,21 +260,22 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
   }
 }
 
-Future<bool> _confirmDeleteDialog({
+Future<bool> _confirmDialog({
   required BuildContext context,
+  required String title,
+  required String cancel,
+  required String confirm,
 }) =>
     showPlatformDialog<bool>(
       context: context,
       barrierDismissible: true,
       builder: (context) {
-        final s = S.of(context);
-
         return PlatformAlertDialog(
-          title: Text(s.delete_confirm__title),
+          title: Text(title),
           actions: [
             PlatformDialogAction(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(s.delete_confirm__cancel),
+              child: Text(cancel),
             ),
             PlatformDialogAction(
               onPressed: () => Navigator.of(context).pop(true),
@@ -257,7 +283,7 @@ Future<bool> _confirmDeleteDialog({
               textStyle: const TextStyle(
                 color: CupertinoColors.destructiveRed,
               ),
-              child: Text(s.delete_confirm__delete),
+              child: Text(confirm),
             ),
           ],
         );

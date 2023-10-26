@@ -1,5 +1,7 @@
 {
   "app_name": "miniCounter",
+  "@___COMMON": "",
+  "common__cancel": "Cancel",
   "@___MAIN_PAGE": "",
   "main_page__title": "Counters",
   "@___UPSERT_PAGE": "",
@@ -8,9 +10,12 @@
   "upsert_page__hint_title": "Title",
   "upsert_page__hint_step": "Counter step",
   "upsert_page__hint_negative": "Negative numbers",
+  "upsert_page__hint_reset": "Reset counter",
   "upsert_page__hint_delete": "Delete counter",
   "@___DELETE_CONFIRM": "",
   "delete_confirm__title": "Delete counter?",
-  "delete_confirm__delete": "Delete",
-  "delete_confirm__cancel": "Cancel"
+  "delete_confirm__confirm": "Delete",
+  "@___RESET_CONFIRM": "",
+  "reset_confirm__title": "Reset counter?",
+  "reset_confirm__confirm": "Reset"
 }

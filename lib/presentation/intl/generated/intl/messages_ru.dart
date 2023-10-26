@@ -22,22 +22,26 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "app_name": MessageLookupByLibrary.simpleMessage("miniCounter"),
-        "delete_confirm__cancel":
-            MessageLookupByLibrary.simpleMessage("Отменить"),
-        "delete_confirm__delete":
+        "common__cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
+        "delete_confirm__confirm":
             MessageLookupByLibrary.simpleMessage("Удалить"),
         "delete_confirm__title":
             MessageLookupByLibrary.simpleMessage("Удалить счетчик?"),
         "main_page__title": MessageLookupByLibrary.simpleMessage("Счетчики"),
+        "reset_confirm__confirm":
+            MessageLookupByLibrary.simpleMessage("Сбросить"),
+        "reset_confirm__title":
+            MessageLookupByLibrary.simpleMessage("Сбросить счетчик?"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Удалить счетчик"),
         "upsert_page__hint_negative":
             MessageLookupByLibrary.simpleMessage("Отрицательные числа"),
+        "upsert_page__hint_reset":
+            MessageLookupByLibrary.simpleMessage("Сброс счетчика"),
         "upsert_page__hint_step":
             MessageLookupByLibrary.simpleMessage("Шаг счетчика"),
         "upsert_page__hint_title":
-            MessageLookupByLibrary.simpleMessage(" Название"),
+            MessageLookupByLibrary.simpleMessage("Название"),
         "upsert_page__title__add":
             MessageLookupByLibrary.simpleMessage("Добавить счетчик"),
         "upsert_page__title__change":

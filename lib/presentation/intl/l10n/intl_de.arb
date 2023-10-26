@@ -1,5 +1,6 @@
 {
-  "app_name": "miniCounter",
+  "@___COMMON": "",
+  "common__cancel": "Abbrechen",
   "@___MAIN_PAGE": "",
   "main_page__title": "Zähler",
   "@___UPSERT_PAGE": "",
@@ -8,9 +9,12 @@
   "upsert_page__hint_title": "Titel",
   "upsert_page__hint_step": "Zählerschritt",
   "upsert_page__hint_negative": "Negative Zahlen",
+  "upsert_page__hint_reset": "Zähler zurücksetzen",
   "upsert_page__hint_delete": "Zähler löschen",
   "@___DELETE_CONFIRM": "",
   "delete_confirm__title": "Zähler löschen?",
-  "delete_confirm__delete": "Löschen",
-  "delete_confirm__cancel": "Abbrechen"
+  "delete_confirm__confirm": "Löschen",
+  "@___RESET_CONFIRM": "",
+  "reset_confirm__title": "Zähler zurücksetzen?",
+  "reset_confirm__confirm": "Zurücksetzen"
 }

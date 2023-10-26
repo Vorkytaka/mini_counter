@@ -68,6 +68,12 @@ class Database extends _$Database {
     ));
   }
 
+  Future<void> resetCounter(String id) async {
+    final query = update(counters);
+    query.where((tbl) => tbl.id.equalsValue(id));
+    await query.write(const CountersCompanion(value: Value(0)));
+  }
+
   static QueryExecutor get _connection => LazyDatabase(() async {
         final dbFolder = await getApplicationDocumentsDirectory();
         final file = File(join(dbFolder.path, 'db.sqlite'));

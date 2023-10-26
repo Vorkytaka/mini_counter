@@ -60,6 +60,16 @@ class S {
     );
   }
 
+  /// `Cancel`
+  String get common__cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'common__cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Counters`
   String get main_page__title {
     return Intl.message(
@@ -120,6 +130,16 @@ class S {
     );
   }
 
+  /// `Reset counter`
+  String get upsert_page__hint_reset {
+    return Intl.message(
+      'Reset counter',
+      name: 'upsert_page__hint_reset',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Delete counter`
   String get upsert_page__hint_delete {
     return Intl.message(
@@ -141,20 +161,30 @@ class S {
   }
 
   /// `Delete`
-  String get delete_confirm__delete {
+  String get delete_confirm__confirm {
     return Intl.message(
       'Delete',
-      name: 'delete_confirm__delete',
+      name: 'delete_confirm__confirm',
       desc: '',
       args: [],
     );
   }
 
-  /// `Cancel`
-  String get delete_confirm__cancel {
+  /// `Reset counter?`
+  String get reset_confirm__title {
     return Intl.message(
-      'Cancel',
-      name: 'delete_confirm__cancel',
+      'Reset counter?',
+      name: 'reset_confirm__title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset_confirm__confirm {
+    return Intl.message(
+      'Reset',
+      name: 'reset_confirm__confirm',
       desc: '',
       args: [],
     );

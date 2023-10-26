@@ -1,16 +1,20 @@
 {
-  "app_name": "miniContador",
-  "@___MAIN_PAGE": "",
-  "main_page__title": "Contadores",
+  "@___COMMON": "",
+  "common__cancel": "Cancelar",
+  "@___PÁGINA_PRINCIPAL": "",
+  "main_page__title": "Counters",
   "@___UPSERT_PAGE": "",
   "upsert_page__title__add": "Añadir contador",
   "upsert_page__title__change": "Cambiar contador",
   "upsert_page__hint_title": "Título",
   "upsert_page__hint_step": "Paso de contador",
   "upsert_page__hint_negative": "Números negativos",
+  "upsert_page__hint_reset": "Reiniciar contador",
   "upsert_page__hint_delete": "Borrar contador",
   "@___DELETE_CONFIRM": "",
   "delete_confirm__title": "¿Borrar contador?",
-  "delete_confirm__delete": "Borrar",
-  "delete_confirm__cancel": "Cancelar"
+  "delete_confirm__confirm": "Borrar",
+  "DELETE_CONFIRM__CONFIRM": "",
+  "reset_confirm__title": "¿Restablecer contador?",
+  "reset_confirm__confirm": "Reiniciar"
 }

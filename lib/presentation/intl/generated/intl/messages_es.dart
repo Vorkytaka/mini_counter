@@ -22,18 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "app_name": MessageLookupByLibrary.simpleMessage("miniContador"),
-        "delete_confirm__cancel":
-            MessageLookupByLibrary.simpleMessage("Cancelar"),
-        "delete_confirm__delete":
+        "common__cancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
+        "delete_confirm__confirm":
             MessageLookupByLibrary.simpleMessage("Borrar"),
         "delete_confirm__title":
             MessageLookupByLibrary.simpleMessage("¿Borrar contador?"),
-        "main_page__title": MessageLookupByLibrary.simpleMessage("Contadores"),
+        "main_page__title": MessageLookupByLibrary.simpleMessage("Counters"),
+        "reset_confirm__confirm":
+            MessageLookupByLibrary.simpleMessage("Reiniciar"),
+        "reset_confirm__title":
+            MessageLookupByLibrary.simpleMessage("¿Restablecer contador?"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Borrar contador"),
         "upsert_page__hint_negative":
             MessageLookupByLibrary.simpleMessage("Números negativos"),
+        "upsert_page__hint_reset":
+            MessageLookupByLibrary.simpleMessage("Reiniciar contador"),
         "upsert_page__hint_step":
             MessageLookupByLibrary.simpleMessage("Paso de contador"),
         "upsert_page__hint_title":

@@ -1,16 +1,20 @@
 {
-  "app_name": "miniCounter",
+  "@___COMMON": "",
+  "common__cancel": "Отменить",
   "@___MAIN_PAGE": "",
   "main_page__title": "Счетчики",
   "@___UPSERT_PAGE": "",
   "upsert_page__title__add": "Добавить счетчик",
   "upsert_page__title__change": "Изменить счетчик",
-  "upsert_page__hint_title": " Название",
+  "upsert_page__hint_title": "Название",
   "upsert_page__hint_step": "Шаг счетчика",
   "upsert_page__hint_negative": "Отрицательные числа",
+  "upsert_page__hint_reset": "Сброс счетчика",
   "upsert_page__hint_delete": "Удалить счетчик",
   "@___DELETE_CONFIRM": "",
   "delete_confirm__title": "Удалить счетчик?",
-  "delete_confirm__delete": "Удалить",
-  "delete_confirm__cancel": "Отменить"
+  "delete_confirm__confirm": "Удалить",
+  "@___RESET_CONFIRM": "",
+  "reset_confirm__title": "Сбросить счетчик?",
+  "reset_confirm__confirm": "Сбросить"
 }
