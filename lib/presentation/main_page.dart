@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
@@ -149,13 +150,23 @@ class _CounterListState extends State<CounterList> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-          (context, i) => CounterWidget(
-                id: ids[i],
-                key: ValueKey(ids[i]),
-              ),
-          childCount: ids.length),
-      // separatorBuilder: (context, i) =>
-      //     Divider(color: CupertinoColors.separator.darkColor),
+        (BuildContext context, int index) {
+          final int itemIndex = index ~/ 2;
+
+          if (index.isEven) {
+            return CounterWidget(id: ids[itemIndex]);
+          }
+
+          return const Divider(height: 1, color: Color(0xFF424242));
+        },
+        semanticIndexCallback: (Widget widget, int localIndex) {
+          if (localIndex.isEven) {
+            return localIndex ~/ 2;
+          }
+          return null;
+        },
+        childCount: max(0, ids.length * 2 - 1),
+      ),
     );
   }
 }
