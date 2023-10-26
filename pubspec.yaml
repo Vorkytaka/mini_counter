@@ -28,6 +28,7 @@ dev_dependencies:
 
   drift_dev: ^2.13.0
   build_runner: ^2.4.6
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -43,3 +44,12 @@ flutter_intl:
   arb_dir: lib/presentation/intl/l10n
   output_dir: lib/presentation/intl/generated
   main_locale: en
+
+# To recreate launcher icons use this command:
+# flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo.png"
+  adaptive_icon_background: "#fafafa"
+  adaptive_icon_foreground: "assets/logo/logo-transparent-padding.png"
