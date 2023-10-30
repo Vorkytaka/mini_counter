@@ -40,6 +40,7 @@ class MainPage extends StatelessWidget {
     }
 
     return PlatformScaffold(
+      resizeToAvoidBottomInset: false,
       floatingActionButton: androidAction,
       body: CustomScrollView(
         slivers: [

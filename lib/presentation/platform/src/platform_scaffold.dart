@@ -8,10 +8,12 @@ class PlatformScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? floatingActionButton;
+  final bool resizeToAvoidBottomInset;
 
   const PlatformScaffold({
     required this.body,
     this.appBar,
+    this.resizeToAvoidBottomInset = true,
     this.floatingActionButton,
     super.key,
   });
@@ -30,6 +32,7 @@ class PlatformScaffold extends StatelessWidget {
 
       return CupertinoPageScaffold(
         navigationBar: appBar,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         child: body,
       );
     } else {
@@ -37,6 +40,7 @@ class PlatformScaffold extends StatelessWidget {
         appBar: appBar,
         body: body,
         floatingActionButton: floatingActionButton,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       );
     }
   }
