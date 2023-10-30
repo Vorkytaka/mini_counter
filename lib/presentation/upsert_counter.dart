@@ -217,7 +217,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
           decoration: const BoxDecoration(),
           autofocus: true,
           prefix: Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsetsDirectional.only(start: 20),
             child: Text(s.upsert_page__hint_title),
           ),
           clearButtonMode: OverlayVisibilityMode.editing,
@@ -226,7 +226,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextField(
           maxLines: 1,
           autofocus: true,
