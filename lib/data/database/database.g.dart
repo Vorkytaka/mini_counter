@@ -430,12 +430,276 @@ class CountersCompanion extends UpdateCompanion<Counter> {
   }
 }
 
+class CountersUpdates extends Table
+    with TableInfo<CountersUpdates, CountersUpdate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  CountersUpdates(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  static const VerificationMeta _counterIdMeta =
+      const VerificationMeta('counterId');
+  late final GeneratedColumn<Uint8List> counterId = GeneratedColumn<Uint8List>(
+      'counter_id', aliasedName, false,
+      type: DriftSqlType.blob,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  static const VerificationMeta _datetimeMeta =
+      const VerificationMeta('datetime');
+  late final GeneratedColumnWithTypeConverter<DateTime, int> datetime =
+      GeneratedColumn<int>('datetime', aliasedName, false,
+              type: DriftSqlType.int,
+              requiredDuringInsert: true,
+              $customConstraints: 'NOT NULL')
+          .withConverter<DateTime>(CountersUpdates.$converterdatetime);
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  late final GeneratedColumn<int> value = GeneratedColumn<int>(
+      'value', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
+  @override
+  List<GeneratedColumn> get $columns => [id, counterId, datetime, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'counters_updates';
+  @override
+  VerificationContext validateIntegrity(Insertable<CountersUpdate> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('counter_id')) {
+      context.handle(_counterIdMeta,
+          counterId.isAcceptableOrUnknown(data['counter_id']!, _counterIdMeta));
+    } else if (isInserting) {
+      context.missing(_counterIdMeta);
+    }
+    context.handle(_datetimeMeta, const VerificationResult.success());
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CountersUpdate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CountersUpdate(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      counterId: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}counter_id'])!,
+      datetime: CountersUpdates.$converterdatetime.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}datetime'])!),
+      value: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}value'])!,
+    );
+  }
+
+  @override
+  CountersUpdates createAlias(String alias) {
+    return CountersUpdates(attachedDatabase, alias);
+  }
+
+  static TypeConverter<DateTime, int> $converterdatetime =
+      const UTCDateTimeConverter();
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class CountersUpdate extends DataClass implements Insertable<CountersUpdate> {
+  final int id;
+  final Uint8List counterId;
+  final DateTime datetime;
+  final int value;
+  const CountersUpdate(
+      {required this.id,
+      required this.counterId,
+      required this.datetime,
+      required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['counter_id'] = Variable<Uint8List>(counterId);
+    {
+      final converter = CountersUpdates.$converterdatetime;
+      map['datetime'] = Variable<int>(converter.toSql(datetime));
+    }
+    map['value'] = Variable<int>(value);
+    return map;
+  }
+
+  CountersUpdatesCompanion toCompanion(bool nullToAbsent) {
+    return CountersUpdatesCompanion(
+      id: Value(id),
+      counterId: Value(counterId),
+      datetime: Value(datetime),
+      value: Value(value),
+    );
+  }
+
+  factory CountersUpdate.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CountersUpdate(
+      id: serializer.fromJson<int>(json['id']),
+      counterId: serializer.fromJson<Uint8List>(json['counter_id']),
+      datetime: serializer.fromJson<DateTime>(json['datetime']),
+      value: serializer.fromJson<int>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'counter_id': serializer.toJson<Uint8List>(counterId),
+      'datetime': serializer.toJson<DateTime>(datetime),
+      'value': serializer.toJson<int>(value),
+    };
+  }
+
+  CountersUpdate copyWith(
+          {int? id, Uint8List? counterId, DateTime? datetime, int? value}) =>
+      CountersUpdate(
+        id: id ?? this.id,
+        counterId: counterId ?? this.counterId,
+        datetime: datetime ?? this.datetime,
+        value: value ?? this.value,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('CountersUpdate(')
+          ..write('id: $id, ')
+          ..write('counterId: $counterId, ')
+          ..write('datetime: $datetime, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, $driftBlobEquality.hash(counterId), datetime, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CountersUpdate &&
+          other.id == this.id &&
+          $driftBlobEquality.equals(other.counterId, this.counterId) &&
+          other.datetime == this.datetime &&
+          other.value == this.value);
+}
+
+class CountersUpdatesCompanion extends UpdateCompanion<CountersUpdate> {
+  final Value<int> id;
+  final Value<Uint8List> counterId;
+  final Value<DateTime> datetime;
+  final Value<int> value;
+  const CountersUpdatesCompanion({
+    this.id = const Value.absent(),
+    this.counterId = const Value.absent(),
+    this.datetime = const Value.absent(),
+    this.value = const Value.absent(),
+  });
+  CountersUpdatesCompanion.insert({
+    this.id = const Value.absent(),
+    required Uint8List counterId,
+    required DateTime datetime,
+    required int value,
+  })  : counterId = Value(counterId),
+        datetime = Value(datetime),
+        value = Value(value);
+  static Insertable<CountersUpdate> custom({
+    Expression<int>? id,
+    Expression<Uint8List>? counterId,
+    Expression<int>? datetime,
+    Expression<int>? value,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (counterId != null) 'counter_id': counterId,
+      if (datetime != null) 'datetime': datetime,
+      if (value != null) 'value': value,
+    });
+  }
+
+  CountersUpdatesCompanion copyWith(
+      {Value<int>? id,
+      Value<Uint8List>? counterId,
+      Value<DateTime>? datetime,
+      Value<int>? value}) {
+    return CountersUpdatesCompanion(
+      id: id ?? this.id,
+      counterId: counterId ?? this.counterId,
+      datetime: datetime ?? this.datetime,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (counterId.present) {
+      map['counter_id'] = Variable<Uint8List>(counterId.value);
+    }
+    if (datetime.present) {
+      final converter = CountersUpdates.$converterdatetime;
+
+      map['datetime'] = Variable<int>(converter.toSql(datetime.value));
+    }
+    if (value.present) {
+      map['value'] = Variable<int>(value.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CountersUpdatesCompanion(')
+          ..write('id: $id, ')
+          ..write('counterId: $counterId, ')
+          ..write('datetime: $datetime, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   late final Counters counters = Counters(this);
+  late final CountersUpdates countersUpdates = CountersUpdates(this);
   late final Trigger counterUpdateTimestamp = Trigger(
       'CREATE TRIGGER IF NOT EXISTS counter_update_timestamp AFTER UPDATE ON counters BEGIN UPDATE counters SET updated_date = strftime(\'%s\', CURRENT_TIMESTAMP) WHERE id = old.id;END',
       'counter_update_timestamp');
+  late final Trigger countersUpdatesTrigger = Trigger(
+      'CREATE TRIGGER IF NOT EXISTS counters_updates_trigger AFTER UPDATE OF value ON counters BEGIN INSERT INTO counters_updates (counter_id, datetime, value) VALUES (OLD.id,(strftime(\'%s\', CURRENT_TIMESTAMP)), NEW.value - OLD.value);END',
+      'counters_updates_trigger');
+  late final Trigger countersUpdatesCleanTrigger = Trigger(
+      'CREATE TRIGGER IF NOT EXISTS counters_updates_clean_trigger AFTER DELETE ON counters BEGIN DELETE FROM counters_updates WHERE counter_id = OLD.id;END',
+      'counters_updates_clean_trigger');
   Future<int> createCounter(String? title, bool negative, int step) {
     return customInsert(
       'INSERT INTO counters (title, table_order, negative, step) VALUES (?1, IFNULL((SELECT MAX(table_order) FROM counters), 0) + 100, ?2, ?3)',
@@ -452,8 +716,13 @@ abstract class _$Database extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [counters, counterUpdateTimestamp];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        counters,
+        countersUpdates,
+        counterUpdateTimestamp,
+        countersUpdatesTrigger,
+        countersUpdatesCleanTrigger
+      ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
         [
@@ -462,6 +731,20 @@ abstract class _$Database extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.update),
             result: [
               TableUpdate('counters', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('counters',
+                limitUpdateKind: UpdateKind.update),
+            result: [
+              TableUpdate('counters_updates', kind: UpdateKind.insert),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('counters',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('counters_updates', kind: UpdateKind.delete),
             ],
           ),
         ],

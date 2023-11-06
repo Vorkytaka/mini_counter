@@ -11,6 +11,13 @@ CREATE TABLE counters (
   "created_date" INTEGER NOT NULL DEFAULT (strftime('%s', CURRENT_TIMESTAMP)) MAPPED BY `const UTCDateTimeConverter()`
 );
 
+CREATE TABLE counters_updates (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "counter_id" BLOB NOT NULL,
+    "datetime" INTEGER NOT NULL MAPPED BY `const UTCDateTimeConverter()`,
+    "value" INTEGER NOT NULL
+);
+
 createCounter: INSERT INTO counters
     (title, "table_order", negative, step)
     VALUES
@@ -24,4 +31,24 @@ CREATE TRIGGER IF NOT EXISTS counter_update_timestamp
         UPDATE counters
         SET updated_date = strftime('%s', CURRENT_TIMESTAMP)
         WHERE id = old.id;
+    END;
+
+CREATE TRIGGER IF NOT EXISTS counters_updates_trigger
+    AFTER UPDATE
+    OF "value"
+    ON "counters"
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO "counters_updates"
+        ("counter_id", "datetime", "value") VALUES
+        (OLD.id, (strftime('%s', CURRENT_TIMESTAMP)), NEW.value - OLD.value);
+    END;
+
+CREATE TRIGGER IF NOT EXISTS counters_updates_clean_trigger
+    AFTER DELETE
+    ON "counters"
+    FOR EACH ROW
+    BEGIN
+        DELETE FROM "counters_updates"
+        WHERE "counter_id" = OLD.id;
     END;
