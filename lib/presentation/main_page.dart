@@ -81,17 +81,17 @@ class _SelectPlatformWidgetState extends State<SelectPlatformWidget> {
           showPlatformDialog<TargetPlatform>(
             context: context,
             builder: (context) => PlatformAlertDialog(
-              title: Text("Select the platform"),
+              title: const Text('Select the platform'),
               actions: [
                 PlatformDialogAction(
                   onPressed: () =>
                       Navigator.of(context).pop(TargetPlatform.iOS),
-                  child: Text('iOS'),
+                  child: const Text('iOS'),
                 ),
                 PlatformDialogAction(
                   onPressed: () =>
                       Navigator.of(context).pop(TargetPlatform.android),
-                  child: Text('Android'),
+                  child: const Text('Android'),
                 ),
               ],
             ),
@@ -125,9 +125,9 @@ class _CounterListState extends State<CounterList> {
     super.initState();
 
     final dependencies = context.read<Dependencies>();
-    final database = dependencies.database;
+    final repository = dependencies.repository;
 
-    _subscription = database.getCountersIds.listen((ids) {
+    _subscription = repository.getCountersIds.listen((ids) {
       if (!_collectionEquality.equals(_ids, ids)) {
         setState(() {
           _ids = ids;
@@ -183,7 +183,7 @@ class CounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dependencies = context.read<Dependencies>();
-    final database = dependencies.database;
+    final repository = dependencies.repository;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -197,7 +197,7 @@ class CounterWidget extends StatelessWidget {
         children: [
           PlatformIconButton(
             onPressed: () {
-              database.decrement(id);
+              repository.decrement(id);
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
@@ -213,7 +213,7 @@ class CounterWidget extends StatelessWidget {
           ),
           PlatformIconButton(
             onPressed: () {
-              database.increment(id);
+              repository.increment(id);
               SystemSound.play(SystemSoundType.click);
               HapticFeedback.lightImpact();
             },
@@ -239,10 +239,10 @@ class CounterCenterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dependencies = context.read<Dependencies>();
-    final database = dependencies.database;
+    final repository = dependencies.repository;
 
     return StreamBuilder<Counter>(
-      stream: database.counter(id),
+      stream: repository.counter(id),
       builder: (context, snapshot) {
         final counter = snapshot.data;
 
