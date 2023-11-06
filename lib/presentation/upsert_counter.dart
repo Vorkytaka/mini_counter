@@ -162,9 +162,9 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                   ).then((value) {
                     if (value) {
                       final dependencies = context.read<Dependencies>();
-                      final database = dependencies.database;
+                      final repository = dependencies.repository;
 
-                      database
+                      repository
                           .resetCounter(widget.counter!.id)
                           .then((_) => Navigator.of(context).pop());
                     }
@@ -182,9 +182,9 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
                   ).then((value) async {
                     if (value) {
                       final dependencies = context.read<Dependencies>();
-                      final database = dependencies.database;
+                      final repository = dependencies.repository;
 
-                      database
+                      repository
                           .deleteCounter(widget.counter!.id)
                           .then((_) => Navigator.of(context).pop());
                     }
@@ -243,18 +243,18 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
 
   void _upsert() {
     final dependencies = context.read<Dependencies>();
-    final database = dependencies.database;
+    final repository = dependencies.repository;
     final title = _controller.text.isEmpty ? null : _controller.text;
 
     if (widget.counter != null) {
-      database.updateCounter(
+      repository.updateCounter(
         widget.counter!.id,
         title: title,
         negative: _negativeEnabled,
         step: _step,
       );
     } else {
-      database.createCounter(title, _negativeEnabled, _step);
+      repository.createCounter(title, _negativeEnabled, _step);
     }
 
     Navigator.of(context).pop();
