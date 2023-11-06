@@ -26,6 +26,7 @@ class App extends StatelessWidget {
       updateShouldNotify: (prev, curr) => false,
       child: PlatformProviderHolder(
         child: PlatformApp(
+          debugShowCheckedModeBanner: false,
           cupertinoTheme: const CupertinoThemeData(
             brightness: Brightness.dark,
             scaffoldBackgroundColor: Color(0xFF171717),

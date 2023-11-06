@@ -231,6 +231,7 @@ class _UpsertCounterPageState extends State<UpsertCounterPage> {
           maxLines: 1,
           autofocus: true,
           controller: _controller,
+          textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(
             label: Text(s.upsert_page__hint_title),
             // border: InputBorder.none,

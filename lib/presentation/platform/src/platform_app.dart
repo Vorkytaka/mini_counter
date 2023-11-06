@@ -9,6 +9,7 @@ class PlatformApp extends StatelessWidget {
   final RouteFactory? onGenerateRoute;
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
   final Iterable<Locale> supportedLocales;
+  final bool debugShowCheckedModeBanner;
 
   //
 
@@ -22,6 +23,7 @@ class PlatformApp extends StatelessWidget {
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.cupertinoTheme,
     this.materialTheme,
+    this.debugShowCheckedModeBanner = true,
     super.key,
   });
 
@@ -36,6 +38,7 @@ class PlatformApp extends StatelessWidget {
         localizationsDelegates: localizationsDelegates,
         supportedLocales: supportedLocales,
         theme: cupertinoTheme,
+        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       );
     } else {
       return MaterialApp(
@@ -45,6 +48,7 @@ class PlatformApp extends StatelessWidget {
         localizationsDelegates: localizationsDelegates,
         supportedLocales: supportedLocales,
         theme: materialTheme,
+        debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       );
     }
   }
