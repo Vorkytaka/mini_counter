@@ -81,17 +81,17 @@ class _SelectPlatformWidgetState extends State<SelectPlatformWidget> {
           showPlatformDialog<TargetPlatform>(
             context: context,
             builder: (context) => PlatformAlertDialog(
-              title: Text("Select the platform"),
+              title: const Text('Select the platform'),
               actions: [
                 PlatformDialogAction(
                   onPressed: () =>
                       Navigator.of(context).pop(TargetPlatform.iOS),
-                  child: Text('iOS'),
+                  child: const Text('iOS'),
                 ),
                 PlatformDialogAction(
                   onPressed: () =>
                       Navigator.of(context).pop(TargetPlatform.android),
-                  child: Text('Android'),
+                  child: const Text('Android'),
                 ),
               ],
             ),
