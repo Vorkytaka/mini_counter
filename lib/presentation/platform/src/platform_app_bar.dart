@@ -6,12 +6,12 @@ import 'platform_provider.dart';
 
 class PlatformSliverAppBar extends StatelessWidget {
   final Widget? leading;
-  final Widget? trailing;
+  final List<Widget>? actions;
   final Widget? title;
 
   const PlatformSliverAppBar({
     this.leading,
-    this.trailing,
+    this.actions,
     this.title,
     super.key,
   });
@@ -22,7 +22,13 @@ class PlatformSliverAppBar extends StatelessWidget {
 
     if (platform.isCupertino) {
       return CupertinoSliverNavigationBar(
-        trailing: trailing,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...?actions,
+          ],
+        ),
         largeTitle: title,
         leading: leading,
       );
@@ -38,7 +44,7 @@ class PlatformSliverAppBar extends StatelessWidget {
           title: title,
         ),
         actions: [
-          if (trailing != null) trailing!,
+          ...?actions,
         ],
       );
     }
@@ -49,11 +55,13 @@ class PlatformAppBar extends StatelessWidget {
   final Widget? trailing;
   final Widget? title;
   final Widget? leading;
+  final bool automaticallyImplyLeading;
 
   const PlatformAppBar({
     this.trailing,
     this.title,
     this.leading,
+    this.automaticallyImplyLeading = false,
     super.key,
   });
 
@@ -63,6 +71,7 @@ class PlatformAppBar extends StatelessWidget {
 
     if (platform.isCupertino) {
       return CupertinoNavigationBar(
+        automaticallyImplyLeading: automaticallyImplyLeading,
         transitionBetweenRoutes: false,
         leading: leading,
         middle: title,
@@ -70,6 +79,7 @@ class PlatformAppBar extends StatelessWidget {
       );
     } else {
       return AppBar(
+        automaticallyImplyLeading: automaticallyImplyLeading,
         title: title,
         leading: leading,
         actions: [
