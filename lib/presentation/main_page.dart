@@ -284,38 +284,60 @@ class CounterCenterWidget extends StatelessWidget {
 
         final title = counter.title;
 
-        return GestureDetector(
-          onTap: () {
-            showUpsertCounterSheet(
-              context: context,
-              counter: counter,
+        return ValueListenableBuilder(
+          valueListenable: context.watch<Dependencies>().compactModeSetting,
+          builder: (context, isCompact, _) {
+            final TextStyle numberStyle;
+            final TextStyle subtitleStyle;
+            if (isCompact ?? true) {
+              numberStyle = const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.w400,
+              );
+              subtitleStyle = const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white54,
+              );
+            } else {
+              numberStyle = const TextStyle(
+                fontSize: 72,
+                fontWeight: FontWeight.w200,
+              );
+              subtitleStyle = const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.white54,
+              );
+            }
+
+            return GestureDetector(
+              onTap: () {
+                showUpsertCounterSheet(
+                  context: context,
+                  counter: counter,
+                );
+              },
+              child: Column(
+                children: [
+                  FittedBox(
+                    child: DefaultTextStyle.merge(
+                      style: numberStyle,
+                      child: Text('${counter.value}'),
+                    ),
+                  ),
+                  if (title != null)
+                    DefaultTextStyle.merge(
+                      style: subtitleStyle,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      child: Text(title),
+                    ),
+                ],
+              ),
             );
           },
-          child: Column(
-            children: [
-              FittedBox(
-                child: DefaultTextStyle.merge(
-                  style: const TextStyle(
-                    fontSize: 72,
-                    fontWeight: FontWeight.w200,
-                  ),
-                  child: Text('${counter.value}'),
-                ),
-              ),
-              if (title != null)
-                DefaultTextStyle.merge(
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white54,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  child: Text(title),
-                ),
-            ],
-          ),
         );
       },
     );
