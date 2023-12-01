@@ -16,5 +16,8 @@
   "delete_confirm__confirm": "Видалити",
   "@___RESET_CONFIRM": "",
   "reset_confirm__title": "Скинути лічильник?",
-  "reset_confirm__confirm": "Скинути"
+  "reset_confirm__confirm": "Скинути",
+  "@___SETTINGS_PAGE": "",
+  "settings_page__title": "Налаштування",
+  "settings_page__compact_ui": "Компатний режим"
 }

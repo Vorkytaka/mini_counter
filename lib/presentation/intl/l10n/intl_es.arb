@@ -16,5 +16,8 @@
   "delete_confirm__confirm": "Borrar",
   "DELETE_CONFIRM__CONFIRM": "",
   "reset_confirm__title": "¿Restablecer contador?",
-  "reset_confirm__confirm": "Reiniciar"
+  "reset_confirm__confirm": "Reiniciar",
+  "@___SETTINGS_PAGE": "",
+  "settings_page__title": "Settings",
+  "settings_page__compact_ui": "Modo de visualización compacto"
 }

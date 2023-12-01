@@ -17,5 +17,8 @@
   "delete_confirm__confirm": "Delete",
   "@___RESET_CONFIRM": "",
   "reset_confirm__title": "Reset counter?",
-  "reset_confirm__confirm": "Reset"
+  "reset_confirm__confirm": "Reset",
+  "@___SETTINGS_PAGE": "",
+  "settings_page__title": "Settings",
+  "settings_page__compact_ui": "Compact Display Mode"
 }

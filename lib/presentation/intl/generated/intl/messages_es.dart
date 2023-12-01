@@ -32,6 +32,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reiniciar"),
         "reset_confirm__title":
             MessageLookupByLibrary.simpleMessage("¿Restablecer contador?"),
+        "settings_page__compact_ui": MessageLookupByLibrary.simpleMessage(
+            "Modo de visualización compacto"),
+        "settings_page__title":
+            MessageLookupByLibrary.simpleMessage("Settings"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Borrar contador"),
         "upsert_page__hint_negative":

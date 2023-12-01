@@ -16,5 +16,8 @@
   "delete_confirm__confirm": "Löschen",
   "@___RESET_CONFIRM": "",
   "reset_confirm__title": "Zähler zurücksetzen?",
-  "reset_confirm__confirm": "Zurücksetzen"
+  "reset_confirm__confirm": "Zurücksetzen",
+  "@___SETTINGS_PAGE": "",
+  "einstellungen_seite__title": "Einstellungen",
+  "einstellungen_seite__kompakt_ui": "Kompakter Anzeigemodus"
 }
