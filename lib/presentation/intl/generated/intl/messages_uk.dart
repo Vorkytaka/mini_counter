@@ -32,6 +32,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Скинути"),
         "reset_confirm__title":
             MessageLookupByLibrary.simpleMessage("Скинути лічильник?"),
+        "settings_page__compact_ui":
+            MessageLookupByLibrary.simpleMessage("Компатний режим"),
+        "settings_page__title":
+            MessageLookupByLibrary.simpleMessage("Налаштування"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Видалити лічильник"),
         "upsert_page__hint_negative":

@@ -189,6 +189,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Settings`
+  String get settings_page__title {
+    return Intl.message(
+      'Settings',
+      name: 'settings_page__title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compact Display Mode`
+  String get settings_page__compact_ui {
+    return Intl.message(
+      'Compact Display Mode',
+      name: 'settings_page__compact_ui',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

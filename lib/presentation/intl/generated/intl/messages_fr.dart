@@ -31,6 +31,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "reset_confirm__confirm": MessageLookupByLibrary.simpleMessage("Reset"),
         "reset_confirm__title":
             MessageLookupByLibrary.simpleMessage("Reset counter ?"),
+        "settings_page__compact_ui":
+            MessageLookupByLibrary.simpleMessage("Mode d\'affichage compact"),
+        "settings_page__title":
+            MessageLookupByLibrary.simpleMessage("Settings"),
         "upsert_page__hint_delete":
             MessageLookupByLibrary.simpleMessage("Supprimer le compteur"),
         "upsert_page__hint_negative":

@@ -16,5 +16,8 @@
   "delete_confirm__confirm": "Удалить",
   "@___RESET_CONFIRM": "",
   "reset_confirm__title": "Сбросить счетчик?",
-  "reset_confirm__confirm": "Сбросить"
+  "reset_confirm__confirm": "Сбросить",
+  "@___SETTINGS_PAGE": "",
+  "settings_page__title": "Настройки",
+  "settings_page__compact_ui": "Компатный режим"
 }

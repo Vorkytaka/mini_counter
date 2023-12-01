@@ -11,6 +11,7 @@ import '../data/database/database.dart';
 import '../dependency.dart';
 import 'intl/generated/l10n.dart';
 import 'platform/platform_ui.dart';
+import 'settings_page.dart';
 import 'upsert_counter.dart';
 
 class MainPage extends StatelessWidget {
@@ -24,19 +25,26 @@ class MainPage extends StatelessWidget {
 
     final Widget? iosAction;
     final Widget? androidAction;
+
+    final Widget? iosSettingsAction;
+    final Widget? androidSettingsAction;
     if (platform.isCupertino) {
       iosAction = PlatformIconButton(
         onPressed: () => showUpsertCounterSheet(context: context),
         padding: EdgeInsets.zero,
         icon: const Icon(Icons.add),
       );
+      iosSettingsAction = const _SettingsAction();
       androidAction = null;
+      androidSettingsAction = null;
     } else {
       iosAction = null;
+      iosSettingsAction = null;
       androidAction = FloatingActionButton(
         onPressed: () => showUpsertCounterSheet(context: context),
         child: const Icon(Icons.add),
       );
+      androidSettingsAction = const _SettingsAction();
     }
 
     return PlatformScaffold(
@@ -45,7 +53,11 @@ class MainPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           PlatformSliverAppBar(
-            trailing: iosAction,
+            leading: iosSettingsAction,
+            actions: [
+              if (iosAction != null) iosAction,
+              if (androidSettingsAction != null) androidSettingsAction,
+            ],
             title: SelectPlatformWidget(
               child: Text(s.main_page__title),
             ),
@@ -53,6 +65,26 @@ class MainPage extends StatelessWidget {
           const CounterList(),
         ],
       ),
+    );
+  }
+}
+
+class _SettingsAction extends StatelessWidget {
+  const _SettingsAction();
+
+  @override
+  Widget build(BuildContext context) {
+    final platform = PlatformProvider.of(context);
+
+    final EdgeInsets? edgeInsets =
+        platform.isCupertino ? EdgeInsets.zero : null;
+
+    return PlatformIconButton(
+      icon: const Icon(Icons.settings_outlined),
+      padding: edgeInsets,
+      onPressed: () {
+        showSettingsBottomSheet(context: context);
+      },
     );
   }
 }
@@ -252,38 +284,60 @@ class CounterCenterWidget extends StatelessWidget {
 
         final title = counter.title;
 
-        return GestureDetector(
-          onTap: () {
-            showUpsertCounterSheet(
-              context: context,
-              counter: counter,
+        return ValueListenableBuilder(
+          valueListenable: context.watch<Dependencies>().compactModeSetting,
+          builder: (context, isCompact, _) {
+            final TextStyle numberStyle;
+            final TextStyle subtitleStyle;
+            if (isCompact ?? true) {
+              numberStyle = const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.w400,
+              );
+              subtitleStyle = const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white54,
+              );
+            } else {
+              numberStyle = const TextStyle(
+                fontSize: 72,
+                fontWeight: FontWeight.w200,
+              );
+              subtitleStyle = const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.white54,
+              );
+            }
+
+            return GestureDetector(
+              onTap: () {
+                showUpsertCounterSheet(
+                  context: context,
+                  counter: counter,
+                );
+              },
+              child: Column(
+                children: [
+                  FittedBox(
+                    child: DefaultTextStyle.merge(
+                      style: numberStyle,
+                      child: Text('${counter.value}'),
+                    ),
+                  ),
+                  if (title != null)
+                    DefaultTextStyle.merge(
+                      style: subtitleStyle,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      child: Text(title),
+                    ),
+                ],
+              ),
             );
           },
-          child: Column(
-            children: [
-              FittedBox(
-                child: DefaultTextStyle.merge(
-                  style: const TextStyle(
-                    fontSize: 72,
-                    fontWeight: FontWeight.w200,
-                  ),
-                  child: Text('${counter.value}'),
-                ),
-              ),
-              if (title != null)
-                DefaultTextStyle.merge(
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white54,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  child: Text(title),
-                ),
-            ],
-          ),
         );
       },
     );
