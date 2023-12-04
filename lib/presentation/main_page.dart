@@ -20,6 +20,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final mediaQuery = MediaQuery.of(context);
 
     final platform = PlatformProvider.of(context);
 
@@ -47,6 +48,11 @@ class MainPage extends StatelessWidget {
       androidSettingsAction = const _SettingsAction();
     }
 
+    double bottomPadding = mediaQuery.padding.bottom;
+    if (!platform.isCupertino) {
+      bottomPadding += 56 + 16;
+    }
+
     return PlatformScaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: androidAction,
@@ -62,7 +68,10 @@ class MainPage extends StatelessWidget {
               child: Text(s.main_page__title),
             ),
           ),
-          const CounterList(),
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: bottomPadding),
+            sliver: const CounterList(),
+          ),
         ],
       ),
     );
